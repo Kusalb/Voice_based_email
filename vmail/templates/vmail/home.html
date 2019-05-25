@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+{% load staticfiles %}
+<script src={% static 'vmail/js/materialize.js' %}></script>
+<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Vocie Based Mail</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card">
+            <a href="{% url 'compose' %}" class="header-font"> <img src="{% static 'vmail/image/compose.png' %}" height="200px" width="220px">
+            </a><div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Compose</b></h4>
+                <p>Compose messages</p>
+            </div>
+        </div>
+    </div>
+       <div class="col-lg-3">
+        <div class="card">
+            <img src="{% static 'vmail/image/inbox.png' %}" height="200px" width="220px">
+            <div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Sent</b></h4>
+                <p>Inbox messages</p>
+            </div>
+        </div>
+    </div>
+       <div class="col-lg-3">
+        <div class="card">
+            <img src="{% static 'vmail/image/sent.png' %}" height="200px" width="220px">
+            <div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Outbox</b></h4>
+                <p>Sent messages</p>
+            </div>
+        </div>
+    </div>
+       <div class="col-lg-3">
+        <div class="card">
+            <img src="{% static 'vmail/image/draft.png' %}" height="200px" width="220px">
+            <div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Draft</b></h4>
+                <p>Draft messages</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% block content %}
+
+{% endblock %}
+<footer class="page-footer">
+          <div class="footer-copyright">
+            <div class="container">
+            © 2019 Copyright GudKush
+            </div>
+          </div>
+        </footer>
+</body>
+</html>

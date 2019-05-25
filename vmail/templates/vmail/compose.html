@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+{% load staticfiles %}
+<script src={% static 'vmail/js/materialize.js' %}></script>
+<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'vmail/js/bootstrap.js' %}">
+<link rel="stylesheet" href="{% static 'vmail/js/bootstrap.min.js' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Vocie Based Mail</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-lg-3" >
+        <div class="card"  >
+{#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target="#myModal"height="200px" width="220px"></a>#}
+          <a href="{% url 'speech' %}"> <img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target=".myModal" height="200px" width="220px">
+          </a><div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Subject</b></h4>
+                <p>Recording</p>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-lg-3">
+        <div class="card" >
+{#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px"></a>#}
+            <a href="{% url 'speech' %}"> <img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal"></a>
+
+            <div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Message</b></h4>
+                <p>Recording</p>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-lg-3">
+        <div class="card">
+{#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px"></a>#}
+         <a href="{% url 'speech' %}"> <img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">
+         </a>
+            <div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Recipent</b></h4>
+                <p>Recording</p>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-lg-3">
+        <div class="card" >
+{#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px"></a>#}
+           <a href="{% url 'speech' %}">  <img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">
+           <div class="container">
+                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Send</b></h4>
+                <p>Recording</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{#  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">#}
+{##}
+{#  </button>#}
+
+  <!-- The Modal -->
+  <div class="modal myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Recording</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+        <img src="{% static 'vmail/image/record.png' %}" height="50px" width="50px">
+            {% for i in value %}
+    {{ i }}
+{% endfor %}
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{#<a href="{% url 'speech' %}" class="header-font">Speech</a>#}
+{#<b ondblclick="alert('dblclick')">Double-click me</b>#}
+
+
+
+
+<footer class="page-footer">
+          <div class="footer-copyright">
+            <div class="container">
+            © 2019 Copyright GudKush
+            </div>
+          </div>
+        </footer>
+</body>
+</html>
