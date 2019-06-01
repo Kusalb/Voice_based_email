@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm</title>
+</head>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
+<script src="{% static 'vmail/js/voice.js' %}"></script>
+<script src="{% static 'vmail/js/sound-mouseover.js' %}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+
+<body>
+
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Vocie Based Mail</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+    </div>
+</nav>
+<audio id='voice-confirm'>
+        <source src= {% static 'vmail/audio/sent.mp3' %}></source>
+ </audio>
+<audio id='voice-discard'>
+        <source src= {% static 'vmail/audio/discard.mp3' %}></source>
+ </audio>
+<audio id='voice-read'>
+        <source src= {% static 'vmail/audio/verify.mp3' %}></source>
+ </audio>
+	<br>
+		<div>
+			<button id=play hidden></button> &nbsp;
+			<button id=pause hidden></button> &nbsp;
+			<button id=stop hidden></button>
+		</div>
+
+<div class="container-fluid" >
+
+    <div class="row">
+        <div class="col-md-6" id="message" style="background-color: blanchedalmond" onmouseover="playMusic('read');" >
+            <br><br>
+            <b>Subject: </b><br> {{ inbox.subject }}<br><br><br>
+            <b> Recipient:</b><br>{{ inbox.recipent }}<br><br><br>
+            <b>Message:</b><br><br>{{ inbox.message }} <br><br>
+        </div>
+
+        <a href="{% url 'compose_send'%} " style="background-color: lightgreen"  class="col-md-3" onmouseover="playMusic('confirm');">
+         <div class="col-md-3" >
+        <img src="{% static 'vmail/image/tick.png' %}" height="250px" width="200px" style="padding-top: 70px;">
+        </div>
+        </a>
+        <a href="{% url 'compose_discard'%}" style="background-color: lightcoral"  class="col-md-3" onmouseover="playMusic('discard');">
+        <div class="col-md-3" >
+        <img src="{% static 'vmail/image/cancel.png' %}" height="250px" width="200px" style="padding-top: 70px;">
+
+        </div>
+        </a>
+    </div>
+
+</div>
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2019 Copyright GudKush
+        </div>
+    </div>
+</footer>
+</html>

@@ -5,6 +5,9 @@ import email
 import imaplib
 import speech_recognition as sr
 import smtplib, ssl
+from gtts import gTTS
+import os
+
 
 # !/usr/bin/env python
 
@@ -20,7 +23,7 @@ import time
 import math
 
 # from vmail.models import Poll
-from vmail.models import Compose, Inbox
+from vmail.models import Compose, Inbox, Draft
 
 data_dict = {}
 
@@ -77,6 +80,18 @@ def compose_message(request):
     value = text
     print(text)
     data_dict['message'] = value
+    engine = pyttsx3.init()  # object creation
+    rate = engine.getProperty('rate')  # getting details of current speaking rate
+    print(rate)  # printing current voice rate
+    engine.setProperty('rate', 125)  # setting up new voice rate
+    volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+    print(volume)  # printing current volume level
+    engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+    voices = engine.getProperty('voices')  # getting details of current voice
+    engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+    engine.say(value)
+    engine.runAndWait()
+    engine.stop()
     return render(request, 'vmail/compose.html', {'value': value})
 
 
@@ -94,6 +109,18 @@ def compose_subject(request):
     value = text
     print(text)
     data_dict['subject'] = value
+    engine = pyttsx3.init()  # object creation
+    rate = engine.getProperty('rate')  # getting details of current speaking rate
+    print(rate)  # printing current voice rate
+    engine.setProperty('rate', 125)  # setting up new voice rate
+    volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+    print(volume)  # printing current volume level
+    engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+    voices = engine.getProperty('voices')  # getting details of current voice
+    engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+    engine.say(value)
+    engine.runAndWait()
+    engine.stop()
     return render(request, 'vmail/compose.html', {'value': value})
 
 
@@ -112,36 +139,67 @@ def compose_recipent(request):
     value = text.replace(' ', '')
     print(text)
     data_dict['recipent'] = value
+    engine = pyttsx3.init()  # object creation
+    rate = engine.getProperty('rate')  # getting details of current speaking rate
+    print(rate)  # printing current voice rate
+    engine.setProperty('rate', 125)  # setting up new voice rate
+    volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+    print(volume)  # printing current volume level
+    engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+    voices = engine.getProperty('voices')  # getting details of current voice
+    engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+    engine.say(value)
+    engine.runAndWait()
+    engine.stop()
     return render(request, 'vmail/compose.html', {'value': value})
 
 
-def compose_send(request):
-    print(data_dict)
+def compose_send1(request):
     inbox_dict = {
         'inbox': data_dict
     }
-    inbox_dict_2 = {}
-    inbox_dict_2['recipent'] = 'kushal.bista@gmail.com'
-    inbox_dict_2['subject'] = 'Subject'
-    inbox_dict_2['message'] = 'Hey you'
+    return render(request, 'vmail/send.html', inbox_dict)
 
+def compose_send(request):
+    print('here')
+    sub = data_dict['subject']
+    to = data_dict['recipent']
+    msg = data_dict['message']
+    print(sub)
+    print(to)
+    print(msg)
     message = Compose.objects.create(to=data_dict['recipent'], subject=data_dict['subject'], message=data_dict['message'])
-    message.save()
-    port = 465  # For SSL
+    message.save
+    port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
-    sender_email = "kbista.logispark@gmail.com"  # Enter your address
-    receiver_email = data_dict['recipent']  # Enter receiver address
+    sender_email = "kbista.logispark@gmail.com "
+    receiver_email = to
     password = '#Bullet123!'
-    message = """\
-    Subject: data_dict['subject']
-
-    data_dict['message']"""
+    message = "\r\n".join(["Subject:" + sub, "", msg])
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)
+        server.ehlo()  # Can be omitted
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message)
+
+    inbox_dict = {
+        'inbox': data_dict
+    }
+
     return render(request, 'vmail/compose.html', inbox_dict)
 
+def compose_discard(request):
+    sub = data_dict['subject']
+    to = data_dict['recipent']
+    msg = data_dict['message']
+    print(sub)
+    print(to)
+    print(msg)
+    msgobject = Draft.objects.create(to=data_dict['recipent'], subject=data_dict['subject'], message=data_dict['message'])
+    msgobject.save
+    return render(request, 'vmail/home.html')
 
 
 def compose(request):
@@ -182,3 +240,13 @@ def inbox(request):
                 list_message.append(inbox)
     inbox_message = list_message
     return render(request, 'vmail/inbox.html', {'inbox': inbox_message})
+
+
+def outbox(request):
+    outbox = Compose.objects.all()
+    return render(request, 'vmail/outbox.html', {'outbox': outbox})
+
+
+def draft(request):
+    draft = Draft.objects.all()
+    return render(request, 'vmail/draft.html', {'draft': draft})

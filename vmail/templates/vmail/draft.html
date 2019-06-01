@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draft</title>
+</head>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
+<script src="{% static 'vmail/js/voice.js' %}"></script>
+<script src="{% static 'vmail/js/sound-mouseover.js' %}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+
+<body>
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Vocie Based Mail- Draft</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+    </div>
+</nav>
+
+<table class="table">
+	  <thead>
+		<tr>
+            <th scope="col" >#</th>
+      <th scope="col">From</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Message</th>
+		</tr>
+	  </thead>
+	  <tbody>
+   {% for i in draft %}
+    <tr id ="tt">
+      <th scope="row"></th>
+      <td>{{ i.to }} </td>
+      <td>{{ i.subject }}</td>
+      <td>{{ i.message }}</td>
+    </tr>
+   {% endfor %}
+	  </tbody>
+	</table>
+
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2019 Copyright GudKush
+        </div>
+    </div>
+</footer>
+</body>
+</html>

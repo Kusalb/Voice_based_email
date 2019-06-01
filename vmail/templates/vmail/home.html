@@ -12,7 +12,6 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src={% static 'vmail/js/sound-mouseover.js' %}></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <body>
 <nav>
@@ -27,8 +26,8 @@
     <audio id='voice-compose'>
         <source src= {% static 'vmail/audio/compose.mp3' %}></source>
     </audio>
-    <audio id='voice-sent'>
-        <source src= {% static 'vmail/audio/sent.mp3' %}></source>
+    <audio id='voice-inbox'>
+        <source src= {% static 'vmail/audio/inbox.mp3' %}></source>
     </audio>
     <audio id='voice-outbox'>
         <source src= {% static 'vmail/audio/outbox.mp3' %}></source>
@@ -51,8 +50,8 @@
 
     </div>
     <div class="col-lg-3">
-        <div class="card" onmouseover="playMusic('sent')">
-            <a href="{% url 'inbox' %}" class="header-font" onmouseover="playMusic('compose');">
+        <div class="card" onmouseover="playMusic('inbox')">
+            <a href="{% url 'inbox' %}" class="header-font">
             <img src="{% static 'vmail/image/inbox.png' %}" height="200px" width="220px">
             </a>
             <div class="container">
@@ -63,7 +62,9 @@
     </div>
     <div class="col-lg-3">
         <div class="card" onmouseover="playMusic('outbox')">
-            <img src="{% static 'vmail/image/sent.png' %}" height="200px" width="220px">
+            <a href="{% url 'outbox' %}" class="header-font">
+                <img src="{% static 'vmail/image/sent.png' %}" height="200px" width="220px">
+            </a>
             <div class="container">
                 <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Outbox</b></h4>
                 <p>Sent messages</p>
@@ -72,11 +73,14 @@
     </div>
     <div class="col-lg-3">
         <div class="card" onmouseover="playMusic('draft')">
+                        <a href="{% url 'draft' %}" class="header-font">
+
             <img src="{% static 'vmail/image/draft.png' %}" height="200px" width="220px">
             <div class="container">
                 <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Draft</b></h4>
                 <p>Draft messages</p>
             </div>
+                        </a>
         </div>
     </div>
 </div>
