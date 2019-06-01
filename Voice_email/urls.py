@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
-    path('', include('vmail.urls') ),
-    path('admin/', admin.site.urls),
+    path('', include('vmail.urls') )
+    # path('admin/(?P<pk>[0-9]+)', admin.site.urls),
+
 ]

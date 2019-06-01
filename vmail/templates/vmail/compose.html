@@ -15,7 +15,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+<script src={% static 'vmail/js/sound-mouseover.js' %}></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -28,12 +28,30 @@
         </ul>
     </div>
 </nav>
+ <audio id='voice-subject'>
+        <source src= {% static 'vmail/audio/subject.mp3' %}></source>
+    </audio>
+
+ <audio id='voice-message'>
+        <source src= {% static 'vmail/audio/message.mp3' %}></source>
+ </audio>
+
+<audio id='voice-recipient'>
+        <source src= {% static 'vmail/audio/recipient.mp3' %}></source>
+ </audio>
+
+<audio id='voice-sent'>
+        <source src= {% static 'vmail/audio/sent.mp3' %}></source>
+ </audio>
+
+
+
 
 <div class="row">
     <div class="col-lg-3" >
-        <div class="card"  >
+        <div class="card" onmouseover="playMusic('subject');">
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target="#myModal"height="200px" width="220px"></a>#}
-          <a href="{% url 'speech' %}"> <img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target=".myModal" height="200px" width="220px">
+          <a href="{% url 'compose_subject'%}"> <img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target=".myModal" height="200px" width="220px" >
           </a><div class="container">
                 <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Subject</b></h4>
                 <p>Recording</p>
@@ -41,10 +59,11 @@
         </div>
     </div>
 
+
         <div class="col-lg-3">
-        <div class="card" >
+        <div class="card" onmouseover="playMusic('message');">
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px"></a>#}
-            <a href="{% url 'speech' %}"> <img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal"></a>
+            <a href="{% url 'compose_message' %}"> <img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal"></a>
 
             <div class="container">
                 <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Message</b></h4>
@@ -54,9 +73,9 @@
     </div>
 
         <div class="col-lg-3">
-        <div class="card">
+        <div class="card" onmouseover="playMusic('recipient');">
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px"></a>#}
-         <a href="{% url 'speech' %}"> <img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">
+         <a href="{% url 'compose_recipent' %}"> <img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">
          </a>
             <div class="container">
                 <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Recipent</b></h4>
@@ -66,9 +85,9 @@
     </div>
 
         <div class="col-lg-3">
-        <div class="card" >
+        <div class="card" onmouseover="playMusic('sent');">
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px"></a>#}
-           <a href="{% url 'speech' %}">  <img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">
+           <a href="{% url 'compose_send' %}">  <img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px">
            <div class="container">
                 <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Send</b></h4>
                 <p>Recording</p>
@@ -95,9 +114,7 @@
 
         <div class="modal-body">
         <img src="{% static 'vmail/image/record.png' %}" height="50px" width="50px">
-            {% for i in value %}
-    {{ i }}
-{% endfor %}
+
         </div>
 
 
@@ -106,6 +123,7 @@
   </div>
 
 </div>
+
 
 
 {#<a href="{% url 'speech' %}" class="header-font">Speech</a>#}

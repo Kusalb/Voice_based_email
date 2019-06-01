@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox</title>
+</head>
+{% load staticfiles %}
+<script src={% static 'vmail/js/materialize.js' %}></script>
+<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src={% static 'vmail/js/sound-mouseover.js' %}></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo" onmouseover="playMusic('header');">Vocie Based Mail - Inbox</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+    </div>
+</nav>
+<div>
+
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">From</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Message</th>
+    </tr>
+  </thead>
+  <tbody>
+   {% for i in inbox %}
+    <tr>
+      <th scope="row"></th>
+      <td>{{ i.from }} </td>
+      <td>{{ i.subject }}</td>
+      <td>{{ i.message }}</td>
+    </tr>
+   {% endfor %}
+  </tbody>
+</table>
+</div>
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2019 Copyright GudKush
+        </div>
+    </div>
+</footer>
+</body>
+</html>
