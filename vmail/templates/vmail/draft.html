@@ -17,11 +17,23 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Vocie Based Mail- Draft</a>
+        <a href="#" class="brand-logo" >Vocie Based Mail- Draft</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+             <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
+        Home
+    </div>
+        </a>
         </ul>
     </div>
 </nav>
+
+<audio id='voice-draft'>
+        <source src= {% static 'vmail/audio/draft.mp3' %}></source>
+ </audio>
+
+<audio id='voice-home'>
+        <source src= {% static 'vmail/audio/home.mp3' %}></source>
+ </audio>
 
 <table class="table">
 	  <thead>
@@ -34,8 +46,9 @@
 	  </thead>
 	  <tbody>
    {% for i in draft %}
-    <tr id ="tt">
-      <th scope="row"></th>
+    <tr id="i{{ i.id }}" onclick="myfunc(this.id)">
+
+        <td>{{ i.id }} </td>
       <td>{{ i.to }} </td>
       <td>{{ i.subject }}</td>
       <td>{{ i.message }}</td>
@@ -43,7 +56,11 @@
    {% endfor %}
 	  </tbody>
 	</table>
-
+<div>
+    <button id=play hidden></button> &nbsp;
+    <button id=pause hidden></button> &nbsp;
+    <button id=stop hidden></button>
+</div>
 <footer class="page-footer">
     <div class="footer-copyright">
         <div class="container">
@@ -51,5 +68,79 @@
         </div>
     </div>
 </footer>
+<script>
+     function myfunc(here) {
+        console.log("Here");
+        if ('speechSynthesis' in window) with (speechSynthesis) {
+
+
+            var playEle = document.querySelector('#play');
+            var pauseEle = document.querySelector('#pause');
+            var stopEle = document.querySelector('#stop');
+            var flag = false;
+
+
+            playEle.addEventListener('click', onClickPlay);
+            pauseEle.addEventListener('click', onClickPause);
+            stopEle.addEventListener('click', onClickStop);
+
+
+            onClickPlay();
+
+
+            function onClickPlay() {
+                console.log("Reached");
+                if (!flag) {
+                    flag = true;
+                    utterance = new SpeechSynthesisUtterance(document.querySelector('#' + here).textContent);
+                    utterance.voice = getVoices()[0];
+                    utterance.onend = function () {
+                        flag = false;
+                        playEle.className = pauseEle.className = '';
+                        stopEle.className = 'stopped';
+                    };
+                    playEle.className = 'played';
+                    stopEle.className = '';
+                    speak(utterance);
+                }
+                if (paused) { /* unpause/resume narration */
+                    playEle.className = 'played';
+                    pauseEle.className = '';
+                    resume();
+                }
+            }
+
+            function onClickPause() {
+                if (speaking && !paused) { /* pause narration */
+                    pauseEle.className = 'paused';
+                    playEle.className = '';
+                    pause();
+                }
+            }
+
+            function onClickStop() {
+                if (speaking) { /* stop narration */
+                    /* for safari */
+                    stopEle.className = 'stopped';
+                    playEle.className = pauseEle.className = '';
+                    flag = false;
+                    cancel();
+
+                }
+            }
+
+        }
+
+        else { /* speech synthesis not supported */
+            msg = document.createElement('h5');
+            msg.textContent = "Detected no support for Speech Synthesis";
+            msg.style.textAlign = 'center';
+            msg.style.backgroundColor = 'red';
+            msg.style.color = 'white';
+            msg.style.marginTop = msg.style.marginBottom = 0;
+            document.body.insertBefore(msg, document.querySelector('div'));
+        }
+    }
+</script>
 </body>
 </html>

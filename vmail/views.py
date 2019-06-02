@@ -7,7 +7,7 @@ import speech_recognition as sr
 import smtplib, ssl
 from gtts import gTTS
 import os
-
+from django.contrib.auth import authenticate, login, logout
 
 # !/usr/bin/env python
 
@@ -253,3 +253,35 @@ def outbox(request):
 def draft(request):
     draft = Draft.objects.all()
     return render(request, 'vmail/draft.html', {'draft': draft})
+
+
+
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        return render(request, template_name='vmail/login.html')
+
+def login_user(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    print(username)
+    print(username)
+    port = 587  # For starttls
+    smtp_server = "smtp.gmail.com"
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP(smtp_server, port) as server:
+            server.ehlo()  # Can be omitted
+            server.starttls(context=context)
+            server.ehlo()  # Can be omitted
+            if(server.login(username, password)):
+                return render(request, 'vmail/home.html')
+            else:
+                return render(request, 'vmail/login.html')
+    except:
+        return render(request, 'vmail/login.html')
+
+
+
+

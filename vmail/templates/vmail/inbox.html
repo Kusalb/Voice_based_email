@@ -65,56 +65,76 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     {% load staticfiles %}
-	<script src="{% static 'vmail/js/voice.js' %}" defer></script>
+    <script src="{% static 'vmail/js/voice.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
     <script src={% static 'vmail/js/materialize.js' %}></script>
     <link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+    <script src={% static 'vmail/js/sound-mouseover.js' %}></script>
 
 
 
-	<title>Inbox</title>
+    <title>Inbox</title>
 </head>
-
 <body>
+
 
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo" onmouseover="playMusic('header');">Vocie Based Mail - Inbox</a>
+        <a href={% url 'index' %} class="brand-logo" onmouseover="playMusic('inbox');">Vocie Based Mail- Inbox</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <div class="row">
+        <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
+        Home
+     </div>
+        </a>
+
+
+</div>
+
         </ul>
     </div>
 </nav>
-		<br>
-		<div>
-			<button id=play hidden></button> &nbsp;
-			<button id=pause hidden></button> &nbsp;
-			<button id=stop hidden></button>
-		</div>
-        <div style="width: 100%; ">
-		<table class="table-responsive">
-	  <thead>
-		<tr>
-            <th scope="col" >#</th>
-      <th class="col-md-3">From</th>
-      <th class="col-md-3">Subject</th>
-      <th class="col-md-6">Message</th>
-		</tr>
-	  </thead>
-	  <tbody>
-   {% for i in inbox %}
-    <tr id = "i{{ i.id }}" onclick="myfunc(this.id)">
-      <td>{{ i.id }}</td>
-      <td>{{ i.from }} </td>
-      <td>{{ i.subject }}</td>
-      <td>{{ i.message }}</td>
-    </tr>
-   {% endfor %}
-	  </tbody>
-	</table>
-        </div>
+
+<audio id='voice-inbox'>
+        <source src= {% static 'vmail/audio/inbox.mp3' %}></source>
+ </audio>
+
+
+<audio id='voice-home'>
+        <source src= {% static 'vmail/audio/home.mp3' %}></source>
+ </audio>
+<br>
+
+<div style="width: 100%; ">
+    <table class="table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th class="col-md-3">From</th>
+            <th class="col-md-3">Subject</th>
+            <th class="col-md-6">Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in inbox %}
+            <tr id="i{{ i.id }}" onclick="myfunc(this.id)">
+                <td>{{ i.id }}</td>
+                <td>{{ i.from }} </td>
+                <td>{{ i.subject }}</td>
+                <td>{{ i.message }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+    <button id=play hidden></button> &nbsp;
+    <button id=pause hidden></button> &nbsp;
+    <button id=stop hidden></button>
+</div>
 <footer class="page-footer">
     <div class="footer-copyright">
         <div class="container">
@@ -123,78 +143,80 @@
     </div>
 </footer>
 <script>
-         function myfunc(here) {
-            console.log("Here");
-            if ('speechSynthesis' in window) with(speechSynthesis) {
+    function myfunc(here) {
+        console.log("Here");
+        if ('speechSynthesis' in window) with (speechSynthesis) {
 
 
-                var playEle = document.querySelector('#play');
-                var pauseEle = document.querySelector('#pause');
-                var stopEle = document.querySelector('#stop');
-                var flag = false;
+            var playEle = document.querySelector('#play');
+            var pauseEle = document.querySelector('#pause');
+            var stopEle = document.querySelector('#stop');
+            var flag = false;
 
 
-                playEle.addEventListener('click', onClickPlay);
-                pauseEle.addEventListener('click', onClickPause);
-                stopEle.addEventListener('click', onClickStop);
+            playEle.addEventListener('click', onClickPlay);
+            pauseEle.addEventListener('click', onClickPause);
+            stopEle.addEventListener('click', onClickStop);
 
 
-				onClickPlay();
+            onClickPlay();
 
 
-                function onClickPlay() {
-                    console.log("Reached");
-                    if(!flag){
-                        flag = true;
-                        utterance = new SpeechSynthesisUtterance(document.querySelector('#'+here).textContent);
-                        utterance.voice = getVoices()[0];
-                        utterance.onend = function(){
-                            flag = false; playEle.className = pauseEle.className = ''; stopEle.className = 'stopped';
-                        };
-                        playEle.className = 'played';
-                        stopEle.className = '';
-                        speak(utterance);
-                    }
-                    if (paused) { /* unpause/resume narration */
-                        playEle.className = 'played';
-                        pauseEle.className = '';
-                        resume();
-                    }
-                }
-
-                function onClickPause() {
-                    if(speaking && !paused){ /* pause narration */
-                        pauseEle.className = 'paused';
-                        playEle.className = '';
-                        pause();
-                    }
-                }
-
-                function onClickStop() {
-                    if(speaking){ /* stop narration */
-                        /* for safari */
-                        stopEle.className = 'stopped';
-                        playEle.className = pauseEle.className = '';
+            function onClickPlay() {
+                console.log("Reached");
+                if (!flag) {
+                    flag = true;
+                    utterance = new SpeechSynthesisUtterance(document.querySelector('#' + here).textContent);
+                    utterance.voice = getVoices()[0];
+                    utterance.onend = function () {
                         flag = false;
-                        cancel();
-
-                    }
+                        playEle.className = pauseEle.className = '';
+                        stopEle.className = 'stopped';
+                    };
+                    playEle.className = 'played';
+                    stopEle.className = '';
+                    speak(utterance);
                 }
-
+                if (paused) { /* unpause/resume narration */
+                    playEle.className = 'played';
+                    pauseEle.className = '';
+                    resume();
+                }
             }
 
-            else { /* speech synthesis not supported */
-                msg = document.createElement('h5');
-                msg.textContent = "Detected no support for Speech Synthesis";
-                msg.style.textAlign = 'center';
-                msg.style.backgroundColor = 'red';
-                msg.style.color = 'white';
-                msg.style.marginTop = msg.style.marginBottom = 0;
-                document.body.insertBefore(msg, document.querySelector('div'));
+            function onClickPause() {
+                if (speaking && !paused) { /* pause narration */
+                    pauseEle.className = 'paused';
+                    playEle.className = '';
+                    pause();
+                }
+            }
+
+            function onClickStop() {
+                if (speaking) { /* stop narration */
+                    /* for safari */
+                    stopEle.className = 'stopped';
+                    playEle.className = pauseEle.className = '';
+                    flag = false;
+                    cancel();
+
+                }
             }
 
         }
-	</script>
+
+        else { /* speech synthesis not supported */
+            msg = document.createElement('h5');
+            msg.textContent = "Detected no support for Speech Synthesis";
+            msg.style.textAlign = 'center';
+            msg.style.backgroundColor = 'red';
+            msg.style.color = 'white';
+            msg.style.marginTop = msg.style.marginBottom = 0;
+            document.body.insertBefore(msg, document.querySelector('div'));
+        }
+
+    }
+</script>
 
 </body>
 

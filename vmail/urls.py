@@ -15,8 +15,9 @@ urlpatterns = [
     path('compose_send', views.compose_send, name='compose_send'),
     path('discard', views.compose_discard, name='compose_discard'),
     path('outbox', views.outbox, name='outbox'),
-    path('draft', views.draft, name='draft')
-
+    path('draft', views.draft, name='draft'),
+    path('login', views.login, name='login'),
+    path('login_user', views.login_user, name='login_user')
 ]
 
 

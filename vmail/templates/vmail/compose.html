@@ -21,13 +21,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <body>
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Vocie Based Mail</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-        </ul>
-    </div>
-</nav>
+
+
  <audio id='voice-subject'>
         <source src= {% static 'vmail/audio/subject.mp3' %}></source>
     </audio>
@@ -44,7 +39,26 @@
         <source src= {% static 'vmail/audio/sent.mp3' %}></source>
  </audio>
 
+<audio id='voice-home'>
+        <source src= {% static 'vmail/audio/home.mp3' %}></source>
+ </audio>
 
+
+<nav>
+    <div class="nav-wrapper">
+        <a href={% url 'index' %} class="brand-logo">Vocie Based Mail</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <div class="row">
+    <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
+        Home
+    </div>
+        </a>
+
+
+</div>
+        </ul>
+    </div>
+</nav>
 
 
 <div class="row">
