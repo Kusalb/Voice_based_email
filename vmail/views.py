@@ -212,6 +212,7 @@ def inbox(request):
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
     mail.login(username, password)
     mail.select("inbox")
+    counter = 0
     result, data = mail.uid('search', None, "ALL")
     inbox_item_list = data[0].split()
     list_message = []
@@ -223,7 +224,8 @@ def inbox(request):
         from_ = email_message['From']
         subject_ = email_message['Subject']
         date_ = email_message['date']
-        counter = 0
+        counter = counter +1
+        print(counter)
         for part in email_message.walk():
 
             if part.get_content_maintype() == "multipart":
@@ -237,6 +239,7 @@ def inbox(request):
                 inbox['subject'] = subject_
                 inbox['date'] = date_
                 inbox['message'] = msg
+                inbox['id'] = counter
                 list_message.append(inbox)
     inbox_message = list_message
     return render(request, 'vmail/inbox.html', {'inbox': inbox_message})
