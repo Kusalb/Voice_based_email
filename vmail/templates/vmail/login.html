@@ -4,17 +4,87 @@
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
+{% load staticfiles %}
+<script src={% static 'vmail/js/materialize.js' %}></script>
+<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src={% static 'vmail/js/sound-mouseover.js' %}></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
 <body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo" onmouseover="playMusic('header');">Vocie Based Mail</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+    </div>
+    <audio id="voice-header">
+        <source src= {% static 'vmail/audio/header.mp3' %}></source>
+    </audio>
+       <audio id='voice-username'>
+        <source src= {% static 'vmail/audio/username.mp3' %}></source>
+    </audio>
+    <audio id='voice-password'>
+        <source src= {% static 'vmail/audio/password.mp3' %}></source>
+    </audio>
+     <audio id='voice-login'>
+        <source src= {% static 'vmail/audio/login.mp3' %}></source>
+    </audio>
+</nav>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <a href="{% url 'username' %}" class="header-font" onmouseover="playMusic('username');">
+                <img src="{% static 'vmail/image/username.png' %}" height="200px" width="220px">
+            </a>
+            <div class="container">
+                <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Username</b></h4>
+                <p></p>
+            </div>
+        </div>
 
-<form action="{% url 'login_user' %}" method="post">
-        {% csrf_token %}
-        <label for="user_input">Username</label>
-        <input id="user_input" type="text" class="form-control" name="username" placeholder="Enter username">
+    </div>
+    <div class="col-lg-4">
+        <div class="card" onmouseover="playMusic('password')">
+            <a href="{% url 'password' %}" class="header-font">
+            <img src="{% static 'vmail/image/password.png' %}" height="200px" width="220px">
+            </a>
+            <div class="container">
+                <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Password</b></h4>
+                <p></p>
+            </div>
+        </div>
+    </div>
 
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" placeholder="********">
-
-        <input type="submit" class="btn btn-primary" value="Login">
-</form>
+    <div class="col-lg-4">
+        <div class="card" onmouseover="playMusic('login')">
+            <a href="{% url 'login_user' %}" class="header-font">
+            <img src="{% static 'vmail/image/login.png' %}" height="200px" width="220px">
+            </a>
+            <div class="container">
+                <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Login</b></h4>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2019 Copyright GudKush
+        </div>
+    </div>
+</footer>
+{#<form action="{% url 'login_user' %}" method="post">#}
+{#        {% csrf_token %}#}
+{#        <label for="user_input">Username</label>#}
+{#        <input id="user_input" type="text" class="form-control" name="username" placeholder="Enter username">#}
+{##}
+{#        <label for="password">Password</label>#}
+{#        <input type="password" class="form-control" name="password" placeholder="********">#}
+{#        <input type="submit" class="btn btn-primary" value="Login">#}
+{#</form>#}
 </body>
 </html>

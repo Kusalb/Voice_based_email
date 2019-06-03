@@ -18,8 +18,19 @@
     <div class="nav-wrapper">
         <a href="#" class="brand-logo" onmouseover="playMusic('header');">Vocie Based Mail</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <div class="row">
+        <a href={% url 'login' %}> <div class="col-md-11" onmouseover="playMusic('logout');">
+        Logout
+     </div>
+        </a>
+
+
+</div>
         </ul>
     </div>
+    <audio id="voice-logout">
+        <source src= {% static 'vmail/audio/logout.mp3' %}></source>
+    </audio>
     <audio id="voice-header">
         <source src= {% static 'vmail/audio/header.mp3' %}></source>
     </audio>

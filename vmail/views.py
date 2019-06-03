@@ -160,6 +160,7 @@ def compose_send1(request):
     }
     return render(request, 'vmail/send.html', inbox_dict)
 
+
 def compose_send(request):
     print('here')
     sub = data_dict['subject']
@@ -168,7 +169,8 @@ def compose_send(request):
     print(sub)
     print(to)
     print(msg)
-    message = Compose.objects.create(to=data_dict['recipent'], subject=data_dict['subject'], message=data_dict['message'])
+    message = Compose.objects.create(to=data_dict['recipent'], subject=data_dict['subject'],
+                                     message=data_dict['message'])
     message.save
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
@@ -190,6 +192,7 @@ def compose_send(request):
 
     return render(request, 'vmail/compose.html', inbox_dict)
 
+
 def compose_discard(request):
     sub = data_dict['subject']
     to = data_dict['recipent']
@@ -197,7 +200,8 @@ def compose_discard(request):
     print(sub)
     print(to)
     print(msg)
-    msgobject = Draft.objects.create(to=data_dict['recipent'], subject=data_dict['subject'], message=data_dict['message'])
+    msgobject = Draft.objects.create(to=data_dict['recipent'], subject=data_dict['subject'],
+                                     message=data_dict['message'])
     msgobject.save
     return render(request, 'vmail/home.html')
 
@@ -224,7 +228,7 @@ def inbox(request):
         from_ = email_message['From']
         subject_ = email_message['Subject']
         date_ = email_message['date']
-        counter = counter +1
+        counter = counter + 1
         print(counter)
         for part in email_message.walk():
 
@@ -255,6 +259,42 @@ def draft(request):
     return render(request, 'vmail/draft.html', {'draft': draft})
 
 
+def password(request):
+    text = []
+    r = sr.Recognizer()  # initialize recognizer
+    with sr.Microphone() as source:  # mention source it will be either Microphone or audio files.
+        print("Speak Anything :")
+        audio = r.listen(source)  # listen to the source
+        try:
+            text = r.recognize_google(audio)  # use recognizer to convert our audio into text part.
+            print("You said : {}".format(text))
+        except:
+            print("Sorry could not recognize your voice")  # In case of voice not recognized  clearly
+
+    value = text
+    print(text)
+    data_dict['password'] = value
+    return render(request, 'vmail/login.html', {'value': value})
+
+
+def username(request):
+    text = []
+    r = sr.Recognizer()  # initialize recognizer
+    with sr.Microphone() as source:  # mention source it will be either Microphone or audio files.
+        print("Speak Anything :")
+        audio = r.listen(source)  # listen to the source
+        try:
+            text = r.recognize_google(audio)  # use recognizer to convert our audio into text part.
+            print("You said : {}".format(text))
+        except:
+            print("Sorry could not recognize your voice")  # In case of voice not recognized  clearly
+
+    value = text.replace(' ', '')
+
+    print(text)
+    data_dict['username'] = value
+    return render(request, 'vmail/login.html', {'value': value})
+
 
 def login(request):
     if request.user.is_authenticated:
@@ -262,11 +302,17 @@ def login(request):
     else:
         return render(request, template_name='vmail/login.html')
 
+
 def login_user(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    print(username)
-    print(username)
+    # username1 = 'kbista.logispark@GMAIL.COM'
+    # password1 = '#Bullet123!'
+    # username1 = credit['username']
+    # password1 = credit['password']
+    # print(password1)
+    # print(username1)
+
+    print(data_dict['username'])
+    print(data_dict['password'])
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
     context = ssl.create_default_context()
@@ -275,13 +321,12 @@ def login_user(request):
             server.ehlo()  # Can be omitted
             server.starttls(context=context)
             server.ehlo()  # Can be omitted
-            if(server.login(username, password)):
+            if (server.login(data_dict['username'], data_dict['password'])):
                 return render(request, 'vmail/home.html')
             else:
                 return render(request, 'vmail/login.html')
     except:
         return render(request, 'vmail/login.html')
-
 
 
 

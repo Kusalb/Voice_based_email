@@ -17,7 +17,9 @@ urlpatterns = [
     path('outbox', views.outbox, name='outbox'),
     path('draft', views.draft, name='draft'),
     path('login', views.login, name='login'),
-    path('login_user', views.login_user, name='login_user')
+    path('login_user', views.login_user, name='login_user'),
+    path('username', views.username, name='username'),
+    path('password', views.password, name='password')
 ]
 
 
