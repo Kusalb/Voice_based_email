@@ -10,7 +10,6 @@ import os
 from django.contrib.auth import authenticate, login, logout
 
 # !/usr/bin/env python
-
 from pocketsphinx.pocketsphinx import *
 from sphinxbase.sphinxbase import *
 
@@ -23,10 +22,9 @@ import time
 import math
 
 # from vmail.models import Poll
-from vmail.models import Compose, Inbox, Draft
+from vmail.models import Compose, Inbox, Draft, Notification
 
-data_dict = {}
-
+data_dict = {'username': '', 'password': '', 'recipent': '', 'message': '', 'subject': '', }
 
 def index(request):
     # engine = pyttsx3.init()  # object creation
@@ -79,19 +77,22 @@ def compose_message(request):
 
     value = text
     print(text)
-    data_dict['message'] = value
-    engine = pyttsx3.init()  # object creation
-    rate = engine.getProperty('rate')  # getting details of current speaking rate
-    print(rate)  # printing current voice rate
-    engine.setProperty('rate', 125)  # setting up new voice rate
-    volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
-    print(volume)  # printing current volume level
-    engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
-    voices = engine.getProperty('voices')  # getting details of current voice
-    engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
-    engine.say(value)
-    engine.runAndWait()
-    engine.stop()
+    try:
+        data_dict['message'] = value
+        engine = pyttsx3.init()  # object creation
+        rate = engine.getProperty('rate')  # getting details of current speaking rate
+        print(rate)  # printing current voice rate
+        engine.setProperty('rate', 125)  # setting up new voice rate
+        volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+        print(volume)  # printing current volume level
+        engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+        voices = engine.getProperty('voices')  # getting details of current voice
+        engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+        engine.say(value)
+        engine.runAndWait()
+        engine.stop()
+    except:
+        print('error')
     return render(request, 'vmail/compose.html', {'value': value})
 
 
@@ -108,19 +109,22 @@ def compose_subject(request):
             print("Sorry could not recognize your voice")  # In case of voice not recognized  clearly
     value = text
     print(text)
-    data_dict['subject'] = value
-    engine = pyttsx3.init()  # object creation
-    rate = engine.getProperty('rate')  # getting details of current speaking rate
-    print(rate)  # printing current voice rate
-    engine.setProperty('rate', 125)  # setting up new voice rate
-    volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
-    print(volume)  # printing current volume level
-    engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
-    voices = engine.getProperty('voices')  # getting details of current voice
-    engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
-    engine.say(value)
-    engine.runAndWait()
-    engine.stop()
+    try:
+        data_dict['subject'] = value
+        engine = pyttsx3.init()  # object creation
+        rate = engine.getProperty('rate')  # getting details of current speaking rate
+        print(rate)  # printing current voice rate
+        engine.setProperty('rate', 125)  # setting up new voice rate
+        volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+        print(volume)  # printing current volume level
+        engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+        voices = engine.getProperty('voices')  # getting details of current voice
+        engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+        engine.say(value)
+        engine.runAndWait()
+        engine.stop()
+    except:
+        return render(request, 'vmail/compose.html')
     return render(request, 'vmail/compose.html', {'value': value})
 
 
@@ -136,21 +140,26 @@ def compose_recipent(request):
         except:
             print("Sorry could not recognize your voice")  # In case of voice not recognized  clearly
 
-    value = text.replace(' ', '')
     print(text)
-    data_dict['recipent'] = value
-    engine = pyttsx3.init()  # object creation
-    rate = engine.getProperty('rate')  # getting details of current speaking rate
-    print(rate)  # printing current voice rate
-    engine.setProperty('rate', 125)  # setting up new voice rate
-    volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
-    print(volume)  # printing current volume level
-    engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
-    voices = engine.getProperty('voices')  # getting details of current voice
-    engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
-    engine.say(value)
-    engine.runAndWait()
-    engine.stop()
+    try:
+        value = text.replace(' ', '')
+        data_dict['recipent'] = value
+        engine = pyttsx3.init()  # object creation
+        rate = engine.getProperty('rate')  # getting details of current speaking rate
+        print(rate)  # printing current voice rate
+        engine.setProperty('rate', 125)  # setting up new voice rate
+        volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+        print(volume)  # printing current volume level
+        engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+        voices = engine.getProperty('voices')  # getting details of current voice
+        engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+        engine.say(value)
+        engine.runAndWait()
+        engine.stop()
+    except:
+        print('sorry')
+        return render(request, 'vmail/compose.html')
+
     return render(request, 'vmail/compose.html', {'value': value})
 
 
@@ -166,6 +175,7 @@ def compose_send(request):
     sub = data_dict['subject']
     to = data_dict['recipent']
     msg = data_dict['message']
+
     print(sub)
     print(to)
     print(msg)
@@ -174,9 +184,11 @@ def compose_send(request):
     message.save
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
-    sender_email = "kbista.logispark@gmail.com "
+    sender_email = data_dict['username']
+    password = data_dict['password']
+    # sender_email = "kbista.logispark@gmail.com "
     receiver_email = to
-    password = '#Bullet123!'
+    # password = '#Bullet123!'
     message = "\r\n".join(["Subject:" + sub, "", msg])
     context = ssl.create_default_context()
     with smtplib.SMTP(smtp_server, port) as server:
@@ -189,11 +201,13 @@ def compose_send(request):
     inbox_dict = {
         'inbox': data_dict
     }
-
     return render(request, 'vmail/compose.html', inbox_dict)
 
 
 def compose_discard(request):
+    sub = ''
+    to = ''
+    msg =''
     sub = data_dict['subject']
     to = data_dict['recipent']
     msg = data_dict['message']
@@ -209,10 +223,11 @@ def compose_discard(request):
 def compose(request):
     return render(request, 'vmail/compose.html')
 
-
 def inbox(request):
-    username = 'kbista.logispark@gmail.com'
-    password = '#Bullet123!'
+    # username = 'kbista.logispark@gmail.com'
+    # password = '#Bullet123!'
+    username = data_dict['username']
+    password = data_dict['password']
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
     mail.login(username, password)
     mail.select("inbox")
@@ -229,9 +244,7 @@ def inbox(request):
         subject_ = email_message['Subject']
         date_ = email_message['date']
         counter = counter + 1
-        print(counter)
         for part in email_message.walk():
-
             if part.get_content_maintype() == "multipart":
                 continue
             content_type = part.get_content_type()
@@ -246,16 +259,34 @@ def inbox(request):
                 inbox['id'] = counter
                 list_message.append(inbox)
     inbox_message = list_message
-    return render(request, 'vmail/inbox.html', {'inbox': inbox_message})
+    print(inbox_message.reverse())
+    cou = len(list_message)
+    print(cou)
+    co = Notification.objects.create( note= cou)
+    co.save
+    getc = Notification.objects.all().count()
+    print(getc)
+    getcount = Notification.objects.last()
+    idc = getcount.id - 1
+    print(idc)
+    getdatac = Notification.objects.filter(id = idc)
+    val = 0
+    for i in getdatac:
+        val = i.note
+    print(val)
+    notifica = ( getcount.note - val )
+    return render(request, 'vmail/inbox.html', {'inbox': inbox_message, 'noti': notifica})
+
+
 
 
 def outbox(request):
-    outbox = Compose.objects.all()
+    outbox = Compose.objects.all().order_by('-id')
     return render(request, 'vmail/outbox.html', {'outbox': outbox})
 
 
 def draft(request):
-    draft = Draft.objects.all()
+    draft = Draft.objects.all().order_by('-id')
     return render(request, 'vmail/draft.html', {'draft': draft})
 
 
@@ -268,13 +299,27 @@ def password(request):
         try:
             text = r.recognize_google(audio)  # use recognizer to convert our audio into text part.
             print("You said : {}".format(text))
+            value = text
+            print(text)
+            data_dict['password'] = value
+            return render(request, 'vmail/login.html', {'value': value})
         except:
+            engine = pyttsx3.init()  # object creation
+            rate = engine.getProperty('rate')  # getting details of current speaking rate
+            print(rate)  # printing current voice rate
+            engine.setProperty('rate', 125)  # setting up new voice rate
+            volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+            print(volume)  # printing current volume level
+            engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+            voices = engine.getProperty('voices')  # getting details of current voice
+            engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+            engine.say('Could not recognize')
+            engine.runAndWait()
+            engine.stop()
             print("Sorry could not recognize your voice")  # In case of voice not recognized  clearly
+            return render(request, 'vmail/login.html')
+        return render(request, 'vmail/login.html')
 
-    value = text
-    print(text)
-    data_dict['password'] = value
-    return render(request, 'vmail/login.html', {'value': value})
 
 
 def username(request):
@@ -286,14 +331,38 @@ def username(request):
         try:
             text = r.recognize_google(audio)  # use recognizer to convert our audio into text part.
             print("You said : {}".format(text))
+            value = text.replace(' ', '')
+            data_dict['username'] = value
+            engine = pyttsx3.init()  # object creation
+            rate = engine.getProperty('rate')  # getting details of current speaking rate
+            print(rate)  # printing current voice rate
+            engine.setProperty('rate', 125)  # setting up new voice rate
+            volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+            print(volume)  # printing current volume level
+            engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+            voices = engine.getProperty('voices')  # getting details of current voice
+            engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+            engine.say(value)
+            engine.runAndWait()
+            engine.stop()
+            return render(request, 'vmail/login.html', {'value': value})
         except:
+            engine = pyttsx3.init()  # object creation
+            rate = engine.getProperty('rate')  # getting details of current speaking rate
+            print(rate)  # printing current voice rate
+            engine.setProperty('rate', 125)  # setting up new voice rate
+            volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+            print(volume)  # printing current volume level
+            engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+            voices = engine.getProperty('voices')  # getting details of current voice
+            engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+            engine.say('Could not recognize')
+            engine.runAndWait()
+            engine.stop()
             print("Sorry could not recognize your voice")  # In case of voice not recognized  clearly
-
-    value = text.replace(' ', '')
-
+            return render(request, 'vmail/login.html')
     print(text)
-    data_dict['username'] = value
-    return render(request, 'vmail/login.html', {'value': value})
+    return render(request, 'vmail/login.html',)
 
 
 def login(request):
@@ -324,9 +393,7 @@ def login_user(request):
             if (server.login(data_dict['username'], data_dict['password'])):
                 return render(request, 'vmail/home.html')
             else:
+                flag = False
                 return render(request, 'vmail/login.html')
     except:
         return render(request, 'vmail/login.html')
-
-
-

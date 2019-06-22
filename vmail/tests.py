@@ -21,23 +21,29 @@
 # engine.stop()
 #
 
-import imaplib, ssl
-# username = request.POST.get('username')
-# password = request.POST.get('password')
-import smtplib
+# import imaplib, ssl
+# # username = request.POST.get('username')
+# # password = request.POST.get('password')
+# import smtplib
+#
+#
+# username = 'kbista.logispark@gmail.com'
+# password = '#Bullet123!'
+# port = 587  # For starttls
+# smtp_server = "smtp.gmail.com"
+# context = ssl.create_default_context()
+# try:
+#     with smtplib.SMTP(smtp_server, port) as server:
+#         server.ehlo()  # Can be omitted
+#         server.starttls(context=context)
+#         server.ehlo()  # Can be omitted
+#         if(server.login(username, password)):
+#             print('Sucessfully logged in')
+# except:
+#     print('try again')
 
 
-username = 'kbista.logispark@gmail.com'
-password = '#Bullet123!'
-port = 587  # For starttls
-smtp_server = "smtp.gmail.com"
-context = ssl.create_default_context()
-try:
-    with smtplib.SMTP(smtp_server, port) as server:
-        server.ehlo()  # Can be omitted
-        server.starttls(context=context)
-        server.ehlo()  # Can be omitted
-        if(server.login(username, password)):
-            print('Sucessfully logged in')
-except:
-    print('try again')
+mylist = [1, 2, 3, 4, 5]
+mylist.reverse()
+
+print(mylist)

@@ -16,7 +16,7 @@
 <body>
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo" onmouseover="playMusic('header');">Vocie Based Mail</a>
+        <a href="#" class="brand-logo" onmouseover="playMusic('header');">Voice Based Mail</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <div class="row">
         <a href={% url 'login' %}> <div class="col-md-11" onmouseover="playMusic('logout');">
@@ -47,6 +47,8 @@
         <source src= {% static 'vmail/audio/draft.mp3' %}></source>
     </audio>
 </nav>
+
+
 <div class="row">
     <div class="col-lg-3">
         <div class="card">
@@ -60,7 +62,7 @@
         </div>
 
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-3">{{ c }}
         <div class="card" onmouseover="playMusic('inbox')">
             <a href="{% url 'inbox' %}" class="header-font">
             <img src="{% static 'vmail/image/inbox.png' %}" height="200px" width="220px">

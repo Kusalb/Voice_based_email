@@ -41,3 +41,7 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=200, default='')
     contact = models.CharField(max_length=200, default='')
     email = models.CharField(max_length=200, default='')
+
+
+class Notification(models.Model):
+    note = models.IntegerField(default=0)

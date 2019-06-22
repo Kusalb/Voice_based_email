@@ -17,7 +17,7 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="{% url 'index' %}" class="brand-logo" onmouseover="playMusic('outbox');">Vocie Based Mail- Outbox</a>
+        <a href="{% url 'index' %}" class="brand-logo" onmouseover="playMusic('outbox');">Voice Based Mail- Outbox</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
         Home
@@ -38,7 +38,7 @@
 <table class="table">
 	  <thead>
 		<tr>
-            <th scope="col" >#</th>
+{#            <th scope="col" >#</th>#}
       <th scope="col">From</th>
       <th scope="col">Subject</th>
       <th scope="col">Message</th>
@@ -48,7 +48,7 @@
    {% for i in outbox %}
     <tr id="i{{ i.id }}" onclick="myfunc(this.id)">
 
-      <td>{{ i.id }} </td>
+{#      <td>{{ i.id }} </td>#}
       <td>{{ i.to }} </td>
       <td>{{ i.subject }}</td>
       <td>{{ i.message }}</td>

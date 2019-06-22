@@ -72,6 +72,7 @@
     <link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
     <script src={% static 'vmail/js/materialize.js' %}></script>
     <link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src={% static 'vmail/js/sound-mouseover.js' %}></script>
 
 
@@ -83,23 +84,83 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href={% url 'index' %} class="brand-logo" onmouseover="playMusic('inbox');">Vocie Based Mail- Inbox</a>
+        <div style="position: absolute;right:10%; height: 100%; width:50px; background-color: rgba(255,2,2,0.3); color:white">
+            <i class="fa fa-bell" style="font-size: 30px; margin-left:20%"></i>
+            <div style="position: absolute;color:maroon; top:8%; right:2%; background-color: lightskyblue; border-radius: 20px; width:20px; height:20px">
+                <p style="position: absolute;top:-100%;right:30%; ">  {{ noti }}</p>
+            </div>
+        </div>
+        {% if noti == 0 %}
+        <a href={% url 'index' %} class="brand-logo" onmouseover="playMusic('zero');">Voice Based Mail- Inbox </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <div class="row">
         <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
         Home
      </div>
         </a>
-
-
+        {% endif %}
+    {% if noti == 1 %}
+        <a href={% url 'inbox' %} class="brand-logo" onmouseover="playMusic('one');">Voice Based Mail- Inbox </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <div class="row">
+        <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
+        Home
+     </div>
+        </a>
+        {% endif %}
+    {% if noti == 2 %}
+        <a href={% url 'inbox' %} class="brand-logo" onmouseover="playMusic('two');">Voice Based Mail- Inbox </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <div class="row">
+        <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
+        Home
+     </div>
+        </a>
+        {% endif %}
+    {% if noti == 3%}
+        <a href={% url 'inbox' %} class="brand-logo" onmouseover="playMusic('three');">Voice Based Mail- Inbox </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <div class="row">
+        <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
+        Home
+     </div>
+        </a>
+        {% endif %}
 </div>
 
         </ul>
     </div>
 </nav>
 
-<audio id='voice-inbox'>
-        <source src= {% static 'vmail/audio/inbox.mp3' %}></source>
+{#{{ noti }}#}
+{#{% for i in getdata %}#}
+{##}
+{#{{ i.note }}#}
+{#{{ dn.note }}#}
+{#{% if i.note == dn.note %}#}
+{#   <b>{{  }}</b>#}
+{#    {% else %}#}
+{#    <p>not applied</p>#}
+{#{% endif %}#}
+{#{% endfor %}#}
+
+<audio id='voice-zero'>
+        <source src= {% static 'vmail/audio/zero.mp3' %}></source>
+ </audio>
+<audio id='voice-one'>
+        <source src= {% static 'vmail/audio/one.mp3' %}></source>
+ </audio>
+<audio id='voice-two'>
+        <source src= {% static 'vmail/audio/two.mp3' %}></source>
+ </audio>
+<audio id='voice-three'>
+        <source src= {% static 'vmail/audio/three.mp3' %}></source>
+ </audio>
+<audio id='voice-four'>
+        <source src= {% static 'vmail/audio/four.mp3' %}></source>
+ </audio>
+<audio id='voice-five'>
+        <source src= {% static 'vmail/audio/five.mp3' %}></source>
  </audio>
 
 
@@ -112,7 +173,7 @@
     <table class="table-responsive">
         <thead>
         <tr>
-            <th scope="col">#</th>
+{#            <th scope="col">#</th>#}
             <th class="col-md-3">From</th>
             <th class="col-md-3">Subject</th>
             <th class="col-md-6">Message</th>
@@ -121,7 +182,7 @@
         <tbody>
         {% for i in inbox %}
             <tr id="i{{ i.id }}" onclick="myfunc(this.id)">
-                <td>{{ i.id }}</td>
+{#                <td>{{ i.id }}</td>#}
                 <td>{{ i.from }} </td>
                 <td>{{ i.subject }}</td>
                 <td>{{ i.message }}</td>
@@ -162,6 +223,7 @@
             onClickPlay();
 
 
+
             function onClickPlay() {
                 console.log("Reached");
                 if (!flag) {
@@ -176,6 +238,7 @@
                     playEle.className = 'played';
                     stopEle.className = '';
                     speak(utterance);
+
                 }
                 if (paused) { /* unpause/resume narration */
                     playEle.className = 'played';
