@@ -147,13 +147,14 @@ def compose_recipent(request):
         engine = pyttsx3.init()  # object creation
         rate = engine.getProperty('rate')  # getting details of current speaking rate
         print(rate)  # printing current voice rate
-        engine.setProperty('rate', 125)  # setting up new voice rate
+        engine.setProperty('rate', 200)  # setting up new voice rate
         volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
         print(volume)  # printing current volume level
         engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
         voices = engine.getProperty('voices')  # getting details of current voice
         engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
-        engine.say(value)
+        for i in value:
+            engine.say(i)
         engine.runAndWait()
         engine.stop()
     except:
@@ -224,10 +225,11 @@ def compose(request):
     return render(request, 'vmail/compose.html')
 
 def inbox(request):
-    # username = 'kbista.logispark@gmail.com'
-    # password = '#Bullet123!'
-    username = data_dict['username']
-    password = data_dict['password']
+    username = 'kushaltech45@gmail.com'
+    password = 'password 1234 @'
+
+    # username = data_dict['username']
+    # password = data_dict['password']
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
     mail.login(username, password)
     mail.select("inbox")
@@ -258,6 +260,7 @@ def inbox(request):
                 inbox['message'] = msg
                 inbox['id'] = counter
                 list_message.append(inbox)
+
     inbox_message = list_message
     print(inbox_message.reverse())
     cou = len(list_message)
@@ -281,8 +284,51 @@ def inbox(request):
 
 
 def outbox(request):
-    outbox = Compose.objects.all().order_by('-id')
-    return render(request, 'vmail/outbox.html', {'outbox': outbox})
+    username = 'kushaltech45@gmail.com'
+    password = 'password 1234 @'
+    # username = data_dict['username']
+    # password = data_dict['password']
+    mail = imaplib.IMAP4_SSL("imap.gmail.com")
+    mail.login(username, password)
+    mail.select('"[Gmail]/Sent Mail"')
+    counter = 0
+    # result, data = mail.uid('search', None, "ALL")
+    result, data = mail.search(None, 'ALL')
+    outbox_item_list = data[0].split()
+    list_message = []
+    for item in outbox_item_list:
+        result2, email_data = mail.uid('fetch', item, '(RFC822)')
+        raw_email = email_data[0][1].decode("utf-8")
+        print(raw_email)
+        email_message = email.message_from_string(raw_email)
+        to_ = email_message['to']
+        bcc = email_message['Bcc']
+        print(bcc)
+        from_ = email_message['From']
+        subject_ = email_message['Subject']
+        date_ = email_message['date']
+        counter = counter + 1
+        for part in email_message.walk():
+            if part.get_content_maintype() == "multipart":
+                continue
+            content_type = part.get_content_type()
+            if "plain" in content_type:
+                msg = part.get_payload()
+                outbox = {}
+                outbox['to'] = to_
+                outbox['from'] = from_
+                outbox['subject'] = subject_
+                outbox['date'] = date_
+                outbox['message'] = msg
+                outbox['bcc'] = bcc
+                print(msg)
+                outbox['id'] = counter
+                list_message.append(outbox)
+    print(list_message)
+    outbox_messages = list_message.reverse()
+    print('here')
+    print(outbox_messages)
+    return render(request, 'vmail/outbox.html', {'outbox': list_message})
 
 
 def draft(request):
@@ -302,6 +348,19 @@ def password(request):
             value = text
             print(text)
             data_dict['password'] = value
+            engine = pyttsx3.init()  # object creation
+            rate = engine.getProperty('rate')  # getting details of current speaking rate
+            print(rate)  # printing current voice rate
+            engine.setProperty('rate', 200)  # setting up new voice rate
+            volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+            print(volume)  # printing current volume level
+            engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+            voices = engine.getProperty('voices')  # getting details of current voice
+            engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+            for i in value:
+                engine.say(i)
+            engine.runAndWait()
+            engine.stop()
             return render(request, 'vmail/login.html', {'value': value})
         except:
             engine = pyttsx3.init()  # object creation
@@ -336,13 +395,14 @@ def username(request):
             engine = pyttsx3.init()  # object creation
             rate = engine.getProperty('rate')  # getting details of current speaking rate
             print(rate)  # printing current voice rate
-            engine.setProperty('rate', 125)  # setting up new voice rate
+            engine.setProperty('rate', 200)  # setting up new voice rate
             volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
             print(volume)  # printing current volume level
             engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
             voices = engine.getProperty('voices')  # getting details of current voice
             engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
             engine.say(value)
+
             engine.runAndWait()
             engine.stop()
             return render(request, 'vmail/login.html', {'value': value})
@@ -391,9 +451,44 @@ def login_user(request):
             server.starttls(context=context)
             server.ehlo()  # Can be omitted
             if (server.login(data_dict['username'], data_dict['password'])):
+                engine = pyttsx3.init()  # object creation
+                rate = engine.getProperty('rate')  # getting details of current speaking rate
+                print(rate)  # printing current voice rate
+                engine.setProperty('rate', 125)  # setting up new voice rate
+                volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+                print(volume)  # printing current volume level
+                engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+                voices = engine.getProperty('voices')  # getting details of current voice
+                engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+                engine.say('You have been sucessfully logged in.')
+                engine.runAndWait()
+                engine.stop()
                 return render(request, 'vmail/home.html')
             else:
-                flag = False
-                return render(request, 'vmail/login.html')
+                engine = pyttsx3.init()  # object creation
+                rate = engine.getProperty('rate')  # getting details of current speaking rate
+                print(rate)  # printing current voice rate
+                engine.setProperty('rate', 125)  # setting up new voice rate
+                volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+                print(volume)  # printing current volume level
+                engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+                voices = engine.getProperty('voices')  # getting details of current voice
+                engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+                engine.say('Invalid username or password. Try again')
+                engine.runAndWait()
+                engine.stop()
+                return redirect('login')
     except:
-        return render(request, 'vmail/login.html')
+        engine = pyttsx3.init()  # object creation
+        rate = engine.getProperty('rate')  # getting details of current speaking rate
+        print(rate)  # printing current voice rate
+        engine.setProperty('rate', 125)  # setting up new voice rate
+        volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+        print(volume)  # printing current volume level
+        engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+        voices = engine.getProperty('voices')  # getting details of current voice
+        engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+        engine.say('Invalid username or password. Try again')
+        engine.runAndWait()
+        engine.stop()
+        return redirect('login')

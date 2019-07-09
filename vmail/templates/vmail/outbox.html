@@ -1,76 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Outbox</title>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <script src={% static 'vmail/js/sound-mouseover.js' %}></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>Voice Based Email-Outbox</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/cover/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'vmail/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'vmail/css/main.css' %}">
+
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+    <script src={% static 'vmail/js/bootstrap.js' %}></script>
+    <script src="{% static 'vmail/js/voice.js' %}"></script>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 60%;
+            margin: auto;
+        }
+    </style>
+
 </head>
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
-<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
-<script src="{% static 'vmail/js/voice.js' %}"></script>
-<script src="{% static 'vmail/js/sound-mouseover.js' %}"></script>
+<body class="text-center">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<div class="">
+    <header class="masthead mb-auto">
+        <div class="inner">
 
 
-<body>
+            <h3 class="masthead-brand" onmouseover="playMusic('header');" style="color: white;font-size: 30px">Voice based
+                email-Outbox</h3>
 
-<nav>
-    <div class="nav-wrapper">
-        <a href="{% url 'index' %}" class="brand-logo" onmouseover="playMusic('outbox');">Voice Based Mail- Outbox</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
-        Home
-    </div>
-        </a>
+            <nav class="nav nav-masthead ">
+                <a class="nav-link active" href="{% url 'index' %}" onmouseover="playMusic('goback');" style="font-size: 25px">Go Back</a>
 
-        </ul>
-    </div>
-</nav>
-
+            </nav>
+        </div>
+    </header>
+    </nav>
+<audio id='voice-header'>
+        <source src= {% static 'vmail/audio/header.mp3' %}></source>
+ </audio>
 <audio id='voice-outbox'>
         <source src= {% static 'vmail/audio/outbox.mp3' %}></source>
  </audio>
-
-<audio id='voice-home'>
-        <source src= {% static 'vmail/audio/home.mp3' %}></source>
+<audio id='voice-previous'>
+        <source src= {% static 'vmail/audio/previous.mp3' %}></source>
  </audio>
-<table class="table">
-	  <thead>
-		<tr>
-{#            <th scope="col" >#</th>#}
-      <th scope="col">From</th>
-      <th scope="col">Subject</th>
-      <th scope="col">Message</th>
-		</tr>
-	  </thead>
-	  <tbody>
-   {% for i in outbox %}
-    <tr id="i{{ i.id }}" onclick="myfunc(this.id)">
+<audio id='voice-next'>
+        <source src= {% static 'vmail/audio/next.mp3' %}></source>
+ </audio>
+<audio id='voice-read_outbox'>
+        <source src= {% static 'vmail/audio/read_outbox.mp3' %}></source>
+ </audio>
+<audio id='voice-goback'>
+        <source src= {% static 'vmail/audio/goback.mp3' %}></source>
+ </audio>
+    <br>
+    <br>
+    <br>
+    <br>
 
-{#      <td>{{ i.id }} </td>#}
-      <td>{{ i.to }} </td>
-      <td>{{ i.subject }}</td>
-      <td>{{ i.message }}</td>
-    </tr>
-   {% endfor %}
-	  </tbody>
-	</table>
-<div>
+
+
+
+    <div class="" style="margin:0;padding:0;width:100%">
+        <br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false" style="width: 100%">
+
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="item active" onmouseover="playMusic('outbox');">
+
+                    <div style="background-color: black; height: 500px; width:100%;">
+                        <div class="row">
+                            <div class="col-md-1" style="color: white"></div>
+                            <div class="col-md-10" style="color: white; font-size: 100px;padding-top: 200px">OUTBOX</div>
+                            <div class="col-md-1" style="color: white"></div>
+                    </div>
+
+                </div>
+                </div>
+
+                {% for i in outbox %}
+                    <div class="item" id="i{{ i.id }}" onclick="myfunc(this.id)" onmouseover="playMusic('read_outbox')">
+                        <div style="background-color: black; height: 500px; width:100%;">
+                             <div class="row" style="height: 1000px">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10" style="background-color: dimgray; font-size: 30px;padding-top: 10px;">
+                                <div style="color: white; font-size: 30px;padding-bottom: 50px  ">To: {{ i.bcc }}</div>
+                                <div style="color: white; font-size: 30px;padding-bottom: 50px">Subject: {{ i.subject }}</div>
+                                <div style="color: white; font-size: 30px;">Message: {{ i.message }}</div>
+                            </div>
+                            <div class="col-md-1" style="color: white;font-size: 30px;padding-top: 250px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" onmouseover="playMusic('previous');">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="left: 8px"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next" onmouseover="playMusic('next');">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="right:8px"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
     <button id=play hidden></button> &nbsp;
     <button id=pause hidden></button> &nbsp;
     <button id=stop hidden></button>
 </div>
-<footer class="page-footer">
-    <div class="footer-copyright">
-        <div class="container">
-            © 2019 Copyright GudKush
-        </div>
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+        <p> Voice based email by <a href="#">@Kusal Bista</a>.</p>
     </div>
 </footer>
 
+</div>
+</div>
+
 <script>
-     function myfunc(here) {
+    function myfunc(here) {
         console.log("Here");
         if ('speechSynthesis' in window) with (speechSynthesis) {
 
@@ -103,6 +185,7 @@
                     playEle.className = 'played';
                     stopEle.className = '';
                     speak(utterance);
+
                 }
                 if (paused) { /* unpause/resume narration */
                     playEle.className = 'played';
@@ -146,3 +229,5 @@
 </script>
 </body>
 </html>
+
+

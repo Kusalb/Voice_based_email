@@ -18,9 +18,9 @@ class Compose(models.Model):
 
 
 class Inbox(models.Model):
-    to = models.CharField(max_length=200, default='')
+    to = models.CharField(max_length=1000, default='')
     subject = models.CharField(max_length=200, default='')
-    message = models.TextField(max_length=5000, default='')
+    message = models.TextField(max_length=100000, default='')
     fromm = models.CharField(max_length=200, default='')
 
 

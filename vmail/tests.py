@@ -1,49 +1,42 @@
-# import pyttsx3
-#
-# data = 'value for js'
-# engine = pyttsx3.init()  # object creation
-# """ RATE"""
-# rate = engine.getProperty('rate')  # getting details of current speaking rate
-# print(rate)  # printing current voice rate
-# engine.setProperty('rate', 125)  # setting up new voice rate
-# """VOLUME"""
-# volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
-# print(volume)  # printing current volume level
-# engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
-# """VOICE"""
-# voices = engine.getProperty('voices')  # getting details of current voice
-# # engine.setProperty('voice', voices[0].id)  #changing index, changes voices. o for male
-# engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
-# engine.say(data)
-# engine.say("Single left click to compose a mail.")
-# # engine.say('My current speaking rate is ' + str(rate))
-# engine.runAndWait()
-# engine.stop()
-#
 
-# import imaplib, ssl
-# # username = request.POST.get('username')
-# # password = request.POST.get('password')
-# import smtplib
-#
-#
-# username = 'kbista.logispark@gmail.com'
-# password = '#Bullet123!'
-# port = 587  # For starttls
-# smtp_server = "smtp.gmail.com"
-# context = ssl.create_default_context()
-# try:
-#     with smtplib.SMTP(smtp_server, port) as server:
-#         server.ehlo()  # Can be omitted
-#         server.starttls(context=context)
-#         server.ehlo()  # Can be omitted
-#         if(server.login(username, password)):
-#             print('Sucessfully logged in')
-# except:
-#     print('try again')
+import email
+import imaplib
+import speech_recognition as sr
+import smtplib, ssl
 
+username = 'gudkush007@gmail.com'
+password = '#Bullet123!'
+mail = imaplib.IMAP4_SSL("imap.gmail.com")
+mail.login(username, password)
+mail.select('"[Gmail]/Sent Mail"')
+counter = 0
+# result, data = mail.uid('search', None, "ALL")
+result, data = mail.search(None, 'ALL')
 
-mylist = [1, 2, 3, 4, 5]
-mylist.reverse()
-
-print(mylist)
+outbox_item_list = data[0].split()
+list_message = []
+for item in outbox_item_list:
+    result2, email_data = mail.uid('fetch', item, '(RFC822)')
+    raw_email = email_data[0][1].decode("utf-8")
+    # print(raw_email)
+    email_message = email.message_from_string(raw_email)
+    to_ = email_message['to']
+    from_ = email_message['From']
+    subject_ = email_message['Subject']
+    date_ = email_message['date']
+    counter = counter + 1
+    for part in email_message.walk():
+        if part.get_content_maintype() == "multipart":
+            continue
+        content_type = part.get_content_type()
+        if "plain" in content_type:
+            msg = part.get_payload()
+            # print(msg)
+            outbox = {}
+            outbox['to'] = to_
+            outbox['from'] = from_
+            outbox['subject'] = subject_
+            outbox['date'] = date_
+            outbox['message'] = msg
+            outbox['id'] = counter
+            print(outbox)

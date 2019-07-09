@@ -1,157 +1,344 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-{% load staticfiles %}
-<script src={% static 'vmail/js/materialize.js' %}></script>
-<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
-<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
-<link rel="stylesheet" href="{% static 'vmail/js/bootstrap.js' %}">
-<link rel="stylesheet" href="{% static 'vmail/js/bootstrap.min.js' %}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src={% static 'vmail/js/sound-mouseover.js' %}></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-<body>
-
-
- <audio id='voice-subject'>
-        <source src= {% static 'vmail/audio/subject.mp3' %}></source>
-    </audio>
-
- <audio id='voice-message'>
-        <source src= {% static 'vmail/audio/message.mp3' %}></source>
- </audio>
-
-<audio id='voice-recipient'>
-        <source src= {% static 'vmail/audio/recipient.mp3' %}></source>
- </audio>
-
-<audio id='voice-sent'>
-        <source src= {% static 'vmail/audio/sent.mp3' %}></source>
- </audio>
-
-<audio id='voice-home'>
-        <source src= {% static 'vmail/audio/home.mp3' %}></source>
- </audio>
-
-
-<nav>
-    <div class="nav-wrapper">
-        <a href={% url 'index' %} class="brand-logo">Voice Based Mail</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <div class="row">
-    <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">
-        Home
-    </div>
-        </a>
-
-
-</div>
-        </ul>
-    </div>
-</nav>
-
-
-<div class="row">
-    <div class="col-lg-3" >
-        <div class="card" onmouseover="playMusic('subject');">
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Home</title>#}
+{#</head>#}
+{#{% load staticfiles %}#}
+{#<script src={% static 'vmail/js/materialize.js' %}></script>#}
+{#<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">#}
+{#<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">#}
+{#<link rel="stylesheet" href="{% static 'vmail/js/bootstrap.js' %}">#}
+{#<link rel="stylesheet" href="{% static 'vmail/js/bootstrap.min.js' %}">#}
+{#<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">#}
+{#  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>#}
+{#  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>#}
+{#  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>#}
+{#<script src={% static 'vmail/js/sound-mouseover.js' %}></script>#}
+{#<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+{#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>#}
+{##}
+{#<body>#}
+{##}
+{##}
+{# <audio id='voice-subject'>#}
+{#        <source src= {% static 'vmail/audio/subject.mp3' %}></source>#}
+{#    </audio>#}
+{##}
+{# <audio id='voice-message'>#}
+{#        <source src= {% static 'vmail/audio/message.mp3' %}></source>#}
+{# </audio>#}
+{##}
+{#<audio id='voice-recipient'>#}
+{#        <source src= {% static 'vmail/audio/recipient.mp3' %}></source>#}
+{# </audio>#}
+{##}
+{#<audio id='voice-sent'>#}
+{#        <source src= {% static 'vmail/audio/sent.mp3' %}></source>#}
+{# </audio>#}
+{##}
+{#<audio id='voice-home'>#}
+{#        <source src= {% static 'vmail/audio/home.mp3' %}></source>#}
+{# </audio>#}
+{##}
+{##}
+{#<nav>#}
+{#    <div class="nav-wrapper">#}
+{#        <a href={% url 'index' %} class="brand-logo">Voice Based Mail</a>#}
+{#        <ul id="nav-mobile" class="right hide-on-med-and-down">#}
+{#            <div class="row">#}
+{#    <a href={% url 'index' %}> <div class="col-md-11" onmouseover="playMusic('home');">#}
+{#        Home#}
+{#    </div>#}
+{#        </a>#}
+{##}
+{##}
+{#</div>#}
+{#        </ul>#}
+{#    </div>#}
+{#</nav>#}
+{##}
+{##}
+{#<div class="row">#}
+{#    <div class="col-lg-3" >#}
+{#        <div class="card" onmouseover="playMusic('subject');">#}
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target="#myModal"height="200px" width="220px"></a>#}
-          <a href="{% url 'compose_subject'%}"> <img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target=".myModal" height="200px" width="220px" >
-          </a><div class="container">
-                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Subject</b></h4>
-                <p>Recording</p>
-            </div>
-        </div>
-    </div>
-
-
-        <div class="col-lg-3">
-        <div class="card" onmouseover="playMusic('message');">
+{#          <a href="{% url 'compose_subject'%}"> <img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target=".myModal" height="200px" width="220px" >#}
+{#          </a><div class="container">#}
+{#                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Subject</b></h4>#}
+{#                <p>Recording</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{##}
+{#        <div class="col-lg-3">#}
+{#        <div class="card" onmouseover="playMusic('message');">#}
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px"></a>#}
-            <a href="{% url 'compose_message' %}"> <img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal"></a>
-
-            <div class="container">
-                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Message</b></h4>
-                <p>Recording</p>
-            </div>
-        </div>
-    </div>
-
-        <div class="col-lg-3">
-        <div class="card" onmouseover="playMusic('recipient');">
+{#            <a href="{% url 'compose_message' %}"> <img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal"></a>#}
+{##}
+{#            <div class="container">#}
+{#                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Message</b></h4>#}
+{#                <p>Recording</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#        <div class="col-lg-3">#}
+{#        <div class="card" onmouseover="playMusic('recipient');">#}
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px"></a>#}
-         <a href="{% url 'compose_recipent' %}"> <img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">
-         </a>
-            <div class="container">
-                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Recipent</b></h4>
-                <p>Recording</p>
-            </div>
-        </div>
-    </div>
-
-        <div class="col-lg-3">
-        <div class="card" onmouseover="playMusic('sent');">
+{#         <a href="{% url 'compose_recipent' %}"> <img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px" data-toggle="modal" data-target=".myModal">#}
+{#         </a>#}
+{#            <div class="container">#}
+{#                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Recipent</b></h4>#}
+{#                <p>Recording</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#        <div class="col-lg-3">#}
+{#        <div class="card" onmouseover="playMusic('sent');">#}
 {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px"></a>#}
-           <a href="{% url 'compose_send1' %}">  <img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px">
-           <div class="container">
-                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Send</b></h4>
-                <p>Recording</p>
-            </div>
-        </div>
-    </div>
-
-</div>
-
+{#           <a href="{% url 'compose_send1' %}">  <img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px">#}
+{#           <div class="container">#}
+{#                <h4 style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic;"><b>Send</b></h4>#}
+{#                <p>Recording</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#</div>#}
+{##}
 {#  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">#}
 {##}
 {#  </button>#}
-
-  <!-- The Modal -->
-  <div class="modal myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Recording</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <div class="modal-body">
-        <img src="{% static 'vmail/image/record.png' %}" height="50px" width="50px">
-
-        </div>
-
-
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-
+{##}
+{#  <!-- The Modal -->#}
+{#  <div class="modal myModal">#}
+{#    <div class="modal-dialog">#}
+{#      <div class="modal-content">#}
+{##}
+{#        <!-- Modal Header -->#}
+{#        <div class="modal-header">#}
+{#          <h4 class="modal-title">Recording</h4>#}
+{#          <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#        </div>#}
+{##}
+{#        <div class="modal-body">#}
+{#        <img src="{% static 'vmail/image/record.png' %}" height="50px" width="50px">#}
+{##}
+{#        </div>#}
+{##}
+{##}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#</div>#}
+{##}
+{##}
+{##}
 {#<a href="{% url 'speech' %}" class="header-font">Speech</a>#}
 {#<b ondblclick="alert('dblclick')">Double-click me</b>#}
+{##}
+{##}
+{##}
+{##}
+{#<footer class="page-footer">#}
+{#          <div class="footer-copyright">#}
+{#            <div class="container">#}
+{#            © 2019 Copyright GudKush#}
+{#            </div>#}
+{#          </div>#}
+{#        </footer>#}
+{#</body>#}
+{#</html>#}
 
 
+<!doctype html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <script src={% static 'vmail/js/sound-mouseover.js' %}></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>Voice Based Email</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/cover/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'vmail/css/style.css' %}">
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+    <script src={% static 'vmail/js/bootstrap.js' %}></script>
+
+</head>
+<body class="text-center">
+
+<div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
 
 
-<footer class="page-footer">
-          <div class="footer-copyright">
-            <div class="container">
-            © 2019 Copyright GudKush
+            <h3 class="masthead-brand" onmouseover="playMusic('compose');">Voice based email-Compose</h3>
+
+            <nav class="nav nav-masthead ">
+                <a class="nav-link active" href="{% url 'index' %}" onmouseover="playMusic('goback')">Go back</a>
+
+            </nav>
+        </div>
+    </header>
+    <audio id='voice-compose'>
+        <source src= {% static 'vmail/audio/compose.mp3' %}></source>
+    </audio>
+    <audio id='voice-goback'>
+        <source src= {% static 'vmail/audio/goback.mp3' %}></source>
+    </audio>
+    <audio id='voice-subject'>
+        <source src= {% static 'vmail/audio/subject.mp3' %}></source>
+    </audio>
+
+    <audio id='voice-message'>
+        <source src= {% static 'vmail/audio/message.mp3' %}></source>
+    </audio>
+
+    <audio id='voice-recipient'>
+        <source src= {% static 'vmail/audio/recipient.mp3' %}></source>
+    </audio>
+
+    <audio id='voice-sent'>
+        <source src= {% static 'vmail/audio/sent.mp3' %}></source>
+    </audio>
+
+    <audio id='voice-home'>
+        <source src= {% static 'vmail/audio/home.mp3' %}></source>
+    </audio>
+
+    </nav>
+
+
+    <div class="row">
+
+
+        <div class="col-lg-3">
+            <div class="card" onmouseover="playMusic('recipient');" data-toggle="modal"
+                 data-target="#exampleModalCenter">
+                {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/reciepent.png' %}" height="200px" width="220px"></a>#}
+                <a href="{% url 'compose_recipent' %}"> <img src="{% static 'vmail/image/reciepent.png' %}"
+                                                             height="300px" width="320px" data-toggle="modal"
+                                                             data-target=".myModal">
+                </a>
+                <div class="container">
+                    <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic; color: dimgrey;"><b>Recipent</b>
+                    </h4>
+                    <p style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;color: dimgrey">
+                        Recording</p>
+                </div>
             </div>
-          </div>
-        </footer>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card" onmouseover="playMusic('subject');" data-toggle="modal" data-target="#exampleModalCenter">
+                {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/subject.png' %}"  data-toggle="modal" data-target="#myModal"height="200px" width="220px"></a>#}
+                <a href="{% url 'compose_subject' %}"> <img src="{% static 'vmail/image/subject.png' %}"
+                                                            data-toggle="modal" data-target=".myModal" height="300px"
+                                                            width="320px">
+                </a>
+                <div class="container">
+                    <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic; color: dimgrey;"><b>Subject</b>
+                    </h4>
+                    <p style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;color: dimgrey">
+                        Recording</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <div class="card" onmouseover="playMusic('message');" data-toggle="modal" data-target="#exampleModalCenter">
+                {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/message.png' %}" height="200px" width="220px"></a>#}
+                <a href="{% url 'compose_message' %}"> <img src="{% static 'vmail/image/message.png' %}" height="300px"
+                                                            width="320px" data-toggle="modal"
+                                                            data-target=".myModal"></a>
+
+                <div class="container">
+                    <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic; color: dimgrey;"><b>Message</b>
+                    </h4>
+                    <p style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;color: dimgrey">
+                        Recording</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <div class="card" onmouseover="playMusic('sent');">
+                {#             <a href="{% url 'speech' %}" class="header-font"><img src="{% static 'vmail/image/sent1.png' %}" height="200px" width="220px"></a>#}
+                <a href="{% url 'compose_send1' %}"> <img src="{% static 'vmail/image/sent1.png' %}" height="300px"
+                                                          width="320px"></a>
+                <div class="container">
+                    <h4 style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic; color: dimgrey;"><b>Send</b>
+                    </h4>
+                    <p style="font-family:georgia,garamond,serif;font-size:20px;font-style:italic;color: dimgrey">
+                        Recording</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    {#<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">#}
+    {#  Launch demo modal#}
+    {#</button>#}
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: black"> Recording...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="{% static 'vmail/image/record.png' %}" height="50px" width="50px">
+
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p> Voice based email by <a href="#">@Kusal Bista</a>.</p>
+        </div>
+    </footer>
+
+</div>
 </body>
 </html>
+
+

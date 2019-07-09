@@ -51,7 +51,7 @@ from gtts import gTTS
 import os
 
 # The text that you want to convert to audio
-mytext = 'No any new mail'
+mytext = 'Outbox'
 
 # Language in which you want to convert
 language = 'en'
@@ -64,7 +64,7 @@ myobj = gTTS(text=mytext, lang=language, slow=False)
 
 # Saving the converted audio in a mp3 file named
 # welcome
-myobj.save("zero.mp3")
+myobj.save("outbox.mp3")
 import smtplib, ssl, imaplib
 #
 # import smtplib, ssl

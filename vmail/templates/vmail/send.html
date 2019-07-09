@@ -1,73 +1,200 @@
-<!DOCTYPE html>
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Confirm</title>#}
+{#</head>#}
+{#{% load staticfiles %}#}
+{#<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">#}
+{#<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">#}
+{#<script src="{% static 'vmail/js/voice.js' %}"></script>#}
+{#<script src="{% static 'vmail/js/sound-mouseover.js' %}"></script>#}
+{##}
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>#}
+{##}
+{##}
+{#<body>#}
+{##}
+{##}
+{#<nav>#}
+{#    <div class="nav-wrapper">#}
+{#        <a href="#" class="brand-logo">Voice Based Mail</a>#}
+{#        <ul id="nav-mobile" class="right hide-on-med-and-down">#}
+{#        </ul>#}
+{#    </div>#}
+{#</nav>#}
+{#<audio id='voice-confirm'>#}
+{#        <source src= {% static 'vmail/audio/sent.mp3' %}></source>#}
+{# </audio>#}
+{#<audio id='voice-discard'>#}
+{#        <source src= {% static 'vmail/audio/discard.mp3' %}></source>#}
+{# </audio>#}
+{#<audio id='voice-read'>#}
+{#        <source src= {% static 'vmail/audio/verify.mp3' %}></source>#}
+{# </audio>#}
+{#	<br>#}
+{#		<div>#}
+{#			<button id=play hidden></button> &nbsp;#}
+{#			<button id=pause hidden></button> &nbsp;#}
+{#			<button id=stop hidden></button>#}
+{#		</div>#}
+{##}
+{#<div class="container-fluid" >#}
+{##}
+{#    <div class="row">#}
+{#        <div class="col-md-6" id="message" style="background-color: blanchedalmond" onmouseover="playMusic('read');" >#}
+{#            <br><br>#}
+{#            <b>Subject: </b><br> {{ inbox.subject }}<br><br><br>#}
+{#            <b> Recipient:</b><br>{{ inbox.recipent }}<br><br><br>#}
+{#            <b>Message:</b><br><br>{{ inbox.message }} <br><br>#}
+{#        </div>#}
+{##}
+{#        <a href="{% url 'compose_send'%} " style="background-color: lightgreen"  class="col-md-3" onmouseover="playMusic('confirm');">#}
+{#         <div class="col-md-3" >#}
+{#        <img src="{% static 'vmail/image/tick.png' %}" height="250px" width="200px" style="padding-top: 70px;">#}
+{#        </div>#}
+{#        </a>#}
+{#        <a href="{% url 'compose_discard'%}" style="background-color: lightcoral"  class="col-md-3" onmouseover="playMusic('discard');">#}
+{#        <div class="col-md-3" >#}
+{#        <img src="{% static 'vmail/image/cancel.png' %}" height="250px" width="200px" style="padding-top: 70px;">#}
+{##}
+{#        </div>#}
+{#        </a>#}
+{#    </div>#}
+{##}
+{#</div>#}
+{#<footer class="page-footer">#}
+{#    <div class="footer-copyright">#}
+{#        <div class="container">#}
+{#            © 2019 Copyright GudKush#}
+{#        </div>#}
+{#    </div>#}
+{#</footer>#}
+{#</html>#}
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Confirm</title>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <script src={% static 'vmail/js/sound-mouseover.js' %}></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>Voice Based Email-Send</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/cover/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'vmail/css/style.css' %}">
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+    <script src={% static 'vmail/js/bootstrap.js' %}></script>
+    <script src="{% static 'vmail/js/voice.js' %}"></script>
+
+
 </head>
-{% load staticfiles %}
-<link rel="stylesheet" href="{% static 'vmail/css/materialize.css' %}">
-<link rel="stylesheet" href="{% static 'vmail/css/bootstrap.css' %}">
-<script src="{% static 'vmail/js/voice.js' %}"></script>
-<script src="{% static 'vmail/js/sound-mouseover.js' %}"></script>
+<body class="text-center">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
 
 
-<body>
+            <h3 class="masthead-brand" onmouseover="playMusic('header');">Voice based email-Send</h3>
 
+            <nav class="nav nav-masthead ">
+                <a class="nav-link active" href="{% url 'compose' %}">Go Back</a>
 
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Voice Based Mail</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-        </ul>
-    </div>
-</nav>
-<audio id='voice-confirm'>
+            </nav>
+        </div>
+    </header>
+
+    </nav>
+    <audio id='voice-header'>
+        <source src= {% static 'vmail/audio/header.mp3' %}></source>
+    </audio>
+    <audio id='voice-confirm'>
         <source src= {% static 'vmail/audio/sent.mp3' %}></source>
- </audio>
-<audio id='voice-discard'>
+    </audio>
+    <audio id='voice-discard'>
         <source src= {% static 'vmail/audio/discard.mp3' %}></source>
- </audio>
-<audio id='voice-read'>
+    </audio>
+    <audio id='voice-read'>
         <source src= {% static 'vmail/audio/verify.mp3' %}></source>
- </audio>
-	<br>
-		<div>
-			<button id=play hidden></button> &nbsp;
-			<button id=pause hidden></button> &nbsp;
-			<button id=stop hidden></button>
-		</div>
-
-<div class="container-fluid" >
+    </audio>
+    <br>
+    <div>
+        <button id=play hidden></button> &nbsp;
+        <button id=pause hidden></button> &nbsp;
+        <button id=stop hidden></button>
+    </div>
 
     <div class="row">
-        <div class="col-md-6" id="message" style="background-color: blanchedalmond" onmouseover="playMusic('read');" >
-            <br><br>
-            <b>Subject: </b><br> {{ inbox.subject }}<br><br><br>
-            <b> Recipient:</b><br>{{ inbox.recipent }}<br><br><br>
-            <b>Message:</b><br><br>{{ inbox.message }} <br><br>
+        <div class="col-md-6" id="message" style="background-color: dimgray; height: 450px"
+             onmouseover="playMusic('read');">
+
+             <div style="background-color: #212529">
+                <b> Recipient:</b><br>
+                <p>{{ inbox.recipent }}</p><br><br><br>
+
+            </div>
+                <br><br>
+            <div style="background-color: #212529">
+                <b>Subject: </b><br>
+                <p>{{ inbox.subject }}</p><br><br><br>
+
+            </div>
+            <br>
+
+            <br>
+            <div style="background-color:#212529">
+                <b>Message:</b><br><br>{{ inbox.message }} <br><br>
+
+            </div>
         </div>
 
-        <a href="{% url 'compose_send'%} " style="background-color: lightgreen"  class="col-md-3" onmouseover="playMusic('confirm');">
-         <div class="col-md-3" >
-        <img src="{% static 'vmail/image/tick.png' %}" height="250px" width="200px" style="padding-top: 70px;">
-        </div>
+        <a href="{% url 'compose_send' %} " style="background-color: grey" class="col-md-3"
+           onmouseover="playMusic('confirm');">
+            <div class="col-md-3">
+                <img src="{% static 'vmail/image/tick.png' %}" height="400px" width="350px" style="padding-top: 80px;">
+            </div>
         </a>
-        <a href="{% url 'compose_discard'%}" style="background-color: lightcoral"  class="col-md-3" onmouseover="playMusic('discard');">
-        <div class="col-md-3" >
-        <img src="{% static 'vmail/image/cancel.png' %}" height="250px" width="200px" style="padding-top: 70px;">
+        <a href="{% url 'compose_discard' %}" style="background-color: darkgrey " class="col-md-3"
+           onmouseover="playMusic('discard');">
+            <div class="col-md-3">
+                <img src="{% static 'vmail/image/cancel.png' %}" height="350px" width="300px"
+                     style="padding-top: 100px; padding-left: 50px">
 
-        </div>
+            </div>
         </a>
     </div>
+
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p> Voice based email by <a href="#">@Kusal Bista</a>.</p>
+        </div>
+    </footer>
 
 </div>
-<footer class="page-footer">
-    <div class="footer-copyright">
-        <div class="container">
-            © 2019 Copyright GudKush
-        </div>
-    </div>
-</footer>
+</div>
+</body>
 </html>
+
