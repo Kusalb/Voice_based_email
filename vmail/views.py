@@ -187,9 +187,7 @@ def compose_send(request):
     smtp_server = "smtp.gmail.com"
     sender_email = data_dict['username']
     password = data_dict['password']
-    # sender_email = "kbista.logispark@gmail.com "
     receiver_email = to
-    # password = '#Bullet123!'
     message = "\r\n".join(["Subject:" + sub, "", msg])
     context = ssl.create_default_context()
     with smtplib.SMTP(smtp_server, port) as server:
