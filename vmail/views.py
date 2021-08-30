@@ -223,8 +223,8 @@ def compose(request):
     return render(request, 'vmail/compose.html')
 
 def inbox(request):
-    username = 'kushaltech45@gmail.com'
-    password = 'password 1234 @'
+    username = 'email here'
+    password = 'password here'
 
     # username = data_dict['username']
     # password = data_dict['password']
@@ -282,8 +282,8 @@ def inbox(request):
 
 
 def outbox(request):
-    username = 'kushaltech45@gmail.com'
-    password = 'password 1234 @'
+    username = 'Email here'
+    password = 'Password here'
     # username = data_dict['username']
     # password = data_dict['password']
     mail = imaplib.IMAP4_SSL("imap.gmail.com")
